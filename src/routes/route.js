@@ -54,7 +54,7 @@ router.get('/movies/:index', function(req, res) {
 
 //Problem 5
 
-router.get('/film/:filmId', function(req, res) {
+router.get('/films/:filmId', function(req, res) {
     let arr = [
         {
             "id" : 0,
@@ -69,7 +69,7 @@ router.get('/film/:filmId', function(req, res) {
             "name" : "Sing is King"
         }
     ];
-    //let a = req.params.filmId;
+    
     let flag = false;
     for(let i = 0 ; i < arr.length ; i++){
         if(req.params.filmId == arr[i].id){
