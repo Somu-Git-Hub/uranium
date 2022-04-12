@@ -1,14 +1,59 @@
 const { count } = require("console")
-const BookModel= require("../models/bookModel")
+const BookModel = require("../models/bookModel")
 
-const createBook= async function (req, res) {
-    let data= req.body
-
+//API1..........................................................
+const createBook = async function (req, res) {
+    let data = req.body
     let savedData= await BookModel.create(data)
     res.send({msg: savedData})
 }
 
-const getBooksData= async function (req, res) {
+
+//API2...........................................................
+const bookList = async function (req, res) {
+    let savedData = await BookModel.find().select({ bookName : 1, authorName : 1, _id : 0})
+    res.send({msg: savedData})
+}
+
+
+//API3...........................................................
+const getBooksInYear = async function (req, res) {
+    let yr = req.query.year;
+    let savedData = await BookModel.find( { year : yr } )
+    res.send({msg: savedData})
+}
+
+
+//API4............................................................
+const getParticularBooks = async function (req, res) {
+    let data1 = req.query.bookName;
+    let data2 = req.query.authorName;
+    let data3 = req.query.indianprice;
+    let data4 = req.query.year;
+    let data5 = req.query.totalPages;
+    let data6 = req.query.stockAvailable;
+    let data7 = req.query.tags;
+
+    let savedData = await BookModel.find({ $or : [{ bookName : data1},{ authorName : data2},{'price.indianprice' : data3},{ year : data4 },{ totalPages :data5 },{ stockAvailable : data6 },{tags : data7}]});
+    res.send({msg: savedData});
+}
+
+
+//API5............................................................
+const getXINRBooks = async function (req, res) {
+    let savedData = await BookModel.find({ $or : [{'price.indianprice' : "100INR"},{'price.indianprice' : "200INR"},{'price.indianprice' : "500INR"}]});
+    res.send({msg: savedData})
+}
+
+
+//API6.............................................................
+const getRandomBooks = async function (req, res) {
+    let savedData = await BookModel.find({ $or: [ {stockAvailable : true },{ totalPages : { $gt : 500 }} ]})
+    res.send({msg: savedData})
+}
+
+
+/*const getBooksData= async function (req, res) {
 
     // let allBooks= await BookModel.find( ).count() // COUNT
 
@@ -61,11 +106,11 @@ const getBooksData= async function (req, res) {
     // let allBooks= await BookModel.find( { bookName:  /^Int/  }) 
     // let allBooks= await BookModel.find( { bookName:  /^INT/i  }) 
     // let allBooks= await BookModel.find( { bookName:  /5$/  }) 
-    // let allBooks= await BookModel.find( { bookName:  /.*Programming.*/i  }) 
+    /* let allBooks= await BookModel.find( { bookName: /* /.*Programming.i  })
     
     // ASYNC AWAIT
     
-    let a= 2+4
+    /*let a= 2+4
     a= a + 10
     console.log(a)
     let allBooks= await BookModel.find( )  //normally this is an asynchronous call..but await makes it synchronous
@@ -78,8 +123,13 @@ const getBooksData= async function (req, res) {
     b= b+ 10
     console.log(b)
     res.send({msg: allBooks})
-}
+}*/
 
 
-module.exports.createBook= createBook
-module.exports.getBooksData= getBooksData
+module.exports.createBook = createBook;
+module.exports.bookList = bookList;
+module.exports.getBooksInYear = getBooksInYear;
+module.exports.getXINRBooks = getXINRBooks;
+module.exports.getRandomBooks = getRandomBooks;
+module.exports.getParticularBooks = getParticularBooks;
+//module.exports.getBooksData= getBooksData
