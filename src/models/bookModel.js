@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const bookSchema = new mongoose.Schema( {
+/*const bookSchema = new mongoose.Schema( {
     bookName: String, 
     authorName: String, 
     tags: [String],
@@ -21,7 +21,33 @@ const bookSchema = new mongoose.Schema( {
     summary :  mongoose.Schema.Types.Mixed,
     isDeleted: Boolean //true on book deletion i.e you flag the document/data as isDeleted: true..(mark "dirty")
 
-}, { timestamps: true });
+}, { timestamps: true });*/
 
 
-module.exports = mongoose.model('Book', bookSchema) //users
+const authorSchema = new mongoose.Schema( {
+    author_id : {
+        type : Number,
+        required : true
+    },
+    author_name : String ,
+    age : Number,
+    address : String
+},{ timestamps: true });
+
+module.exports = mongoose.model('authorCollection', authorSchema)
+
+
+const bookSchema = new mongoose.Schema( {
+   name : String,
+   author_id : {
+       type : Number,
+       required : true
+   },
+   price : Number,
+   ratings : Number
+},{ timestamps: true });
+
+module.exports = mongoose.model('bookCollection', bookSchema)
+
+
+//module.exports = mongoose.model('Book', bookSchema) //users
