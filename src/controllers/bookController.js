@@ -18,14 +18,14 @@ const bookList = async function (req, res) {
 
 //API3...........................................................
 const getBooksInYear = async function (req, res) {
-    let yr = req.query.year;
+    let yr = req.body.year;
     let savedData = await BookModel.find( { year : yr } )
     res.send({msg: savedData})
 }
 
 
 //API4............................................................
-const getParticularBooks = async function (req, res) {
+/*const getParticularBooks = async function (req, res) {
     let data1 = req.query.bookName;
     let data2 = req.query.authorName;
     let data3 = req.query.indianprice;
@@ -36,8 +36,14 @@ const getParticularBooks = async function (req, res) {
 
     let savedData = await BookModel.find({ $or : [{ bookName : data1},{ authorName : data2},{'price.indianprice' : data3},{ year : data4 },{ totalPages :data5 },{ stockAvailable : data6 },{tags : data7}]});
     res.send({msg: savedData});
-}
+}*/
 
+const getParticularBooks = async function (req, res) {
+    let data = req.body;
+    let savedData = await BookModel.find({ $or : [{ bookName : data.bookName},{ authorName : data.authorName }/*,{ 'price.indianprice' : data.price.indianprice },{'price.europeanprice' : data.price.europeanprice}*/,{ year : data.year },{ totalPages :data.totalPages },{ stockAvailable : data.stockAvailable },{tags : data.tags}]});
+    res.send({msg: savedData});
+    //console.log(data);
+}
 
 //API5............................................................
 const getXINRBooks = async function (req, res) {
@@ -51,7 +57,6 @@ const getRandomBooks = async function (req, res) {
     let savedData = await BookModel.find({ $or: [ {stockAvailable : true },{ totalPages : { $gt : 500 }} ]})
     res.send({msg: savedData})
 }
-
 
 /*const getBooksData= async function (req, res) {
 
