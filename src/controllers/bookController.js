@@ -40,9 +40,8 @@ const getBooksInYear = async function (req, res) {
 
 const getParticularBooks = async function (req, res) {
     let data = req.body;
-    let savedData = await BookModel.find({ $or : [{ bookName : data.bookName},{ authorName : data.authorName }/*,{ 'price.indianprice' : data.price.indianprice },{'price.europeanprice' : data.price.europeanprice}*/,{ year : data.year },{ totalPages :data.totalPages },{ stockAvailable : data.stockAvailable },{tags : data.tags}]});
+    let savedData = await BookModel.find({ $or : [{ bookName : data.bookName},{ authorName : data.authorName }/*,{ 'price.indianprice' : data.price.indianprice },{'price : data.price.europeanprice}*/,{ year : data.year },{ totalPages :data.totalPages },{ stockAvailable : data.stockAvailable },{tags : data.tags}]});
     res.send({msg: savedData});
-    //console.log(data);
 }
 
 //API5............................................................
