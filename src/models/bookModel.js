@@ -24,19 +24,6 @@ const mongoose = require('mongoose');
 }, { timestamps: true });*/
 
 
-const authorSchema = new mongoose.Schema( {
-    author_id : {
-        type : Number,
-        required : true
-    },
-    author_name : String ,
-    age : Number,
-    address : String
-},{ timestamps: true });
-
-module.exports = mongoose.model('authorCollection', authorSchema)
-
-
 const bookSchema = new mongoose.Schema( {
    name : String,
    author_id : {
