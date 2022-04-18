@@ -1,5 +1,6 @@
 const authorModel = require("../models/authorModel")
 const newAuthorModel = require("../models/newAuthorModel");
+const newBookModel = require("../models/newBookModel");
 const bookModel = require("../models/newBookModel")
 const newPublisherModel = require("../models/newPublisherModel")
 
@@ -45,11 +46,13 @@ const getBooks = async function (req, res) {
 }
 
 const books = async function(req,res){
-    let data = req.body.publisher._id;
-    console.log(data);
-    /*let updatedBooks = await bookModel.findOneAndUpdate({publisher : "Penguin"},{publisher : "HarperCollins"},{upsert : true})*/
-
-    res.send({Update : data});
+    let fetchData = await newPublisherModel.find({name :{$in : ['Penguin','HarperCollins']}}).select({_id : 1})
+    let arr = [];
+    for(let i = 0 ; i < fetchData.length ; i++){
+        arr.push(fetchData[i].id)
+    }
+    let updatedData= await newBookModel.updateMany({publisher :{$in : arr}},{isHardCover : true});
+    res.send({Data : updatedData});
 }
 
 /*const getBooksData= async function (req, res) {
@@ -63,5 +66,7 @@ module.exports.createBook = createBook
 module.exports.books = books
 
 module.exports.getBooks = getBooks
+
+module.exports.books = books
 
 //module.exports.getBooksData = getBooksData
