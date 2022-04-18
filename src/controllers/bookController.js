@@ -1,10 +1,10 @@
-const authorModel = require("../models/authorModel")
+/*const authorModel = require("../models/authorModel")
 const newAuthorModel = require("../models/newAuthorModel");
 const newBookModel = require("../models/newBookModel");
 const bookModel = require("../models/newBookModel")
-const newPublisherModel = require("../models/newPublisherModel")
+const newPublisherModel = require("../models/newPublisherModel")*/
 
-const createBook = async function (req, res) {
+/*const createBook = async function (req, res) {
     let flag1 = true;
     let flag2 = true;
     let data = req.body;
@@ -55,18 +55,18 @@ const books = async function(req,res){
     res.send({Data : updatedData});
 }
 
-/*const getBooksData= async function (req, res) {
+const getBooksData= async function (req, res) {
     let books = await bookModel.find()
     res.send({data: books})
-}*/
+}
+*/
 
-
-module.exports.createBook = createBook
+/*module.exports.createBook = createBook
 
 module.exports.books = books
 
 module.exports.getBooks = getBooks
 
-module.exports.books = books
+module.exports.books = books*/
 
 //module.exports.getBooksData = getBooksData
