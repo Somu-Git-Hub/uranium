@@ -5,12 +5,14 @@ const UserController= require("../controllers/userController")
 const BookController= require("../controllers/bookController")
 
 router.get("/test-me", function (req, res) {
-    res.send("My first ever api!")
+    res.send({MiddlewareRunning : " Everything is fine..! " })
 })
 
-router.post("/createUser", UserController.createUser  )
+router.get("/testApi",UserController.testApi);
 
-router.get("/getUsersData", UserController.getUsersData)
+/*router.post("/createUser", UserController.createUser  )
+
+router.get("/getUsersData", UserController.getUsersData);
 
 router.post("/createBook", BookController.createBook  )
 
@@ -37,5 +39,6 @@ router.get("/dateManipulations", function (req, res) {
 
     res.send({ msg: "all good"})
 })
+*/
 
 module.exports = router;

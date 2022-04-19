@@ -2,7 +2,10 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const route = require('./routes/route.js');
 const { default: mongoose } = require('mongoose');
+const { use } = require('./routes/route.js');
 const app = express();
+
+var ip = require('ip');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -13,6 +16,15 @@ mongoose.connect("mongodb+srv://functionup-cohort:G0Loxqc9wFEGyEeJ@cluster0.rzot
 })
 .then( () => console.log("MongoDb is connected"))
 .catch ( err => console.log(err) )
+
+
+app.use(
+    function(req,res,next){
+        //console.log("Welcome to first Global middleware!");
+        console.log(new Date(),",",ip.address(), ",", req.path);
+        next();
+    }
+)
 
 app.use('/', route);
 

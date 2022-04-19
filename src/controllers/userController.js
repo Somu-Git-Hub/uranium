@@ -1,5 +1,9 @@
 const UserModel= require("../models/userModel")
 
+const testApi = async function(req,res){
+    res.send({Data : "API is running..!"});
+}
+
 const createUser= async function (req, res) {
     let data= req.body
     let savedData= await UserModel.create(data)
@@ -13,3 +17,4 @@ const getUsersData= async function (req, res) {
 
 module.exports.createUser= createUser
 module.exports.getUsersData= getUsersData
+module.exports.testApi = testApi
