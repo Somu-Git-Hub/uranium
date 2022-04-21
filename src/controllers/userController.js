@@ -1,7 +1,16 @@
 const req = require("express/lib/request")
-const UserModel= require("../models/userModel")
+const userModel= require("../models/userModel")
 
-const basicCode= async function(req, res) {
+
+const createUser = async function(req,res){
+    let data = req.body;
+    let createdData = await userModel.create(data);
+    res.send({Data : createdData});
+}
+
+
+
+/*const basicCode= async function(req, res) {
     let tokenDataInHeaders= req.headers.token
     console.log(tokenDataInHeaders)
     //counter
@@ -44,27 +53,15 @@ const createAUser = function(req, res) {
 
     res.send('Just create a user')
 }
-
-module.exports.createAUser = createAUser
-module.exports.basicCode = basicCode
-
-
+*/
+module.exports.createUser = createUser
+//module.exports.basicCode = basicCode
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-const createUser= async function (req, res) {
+/*const createUser= async function (req, res) {
     let data= req.body
     let savedData= await UserModel.create(data)
     res.send({msg: savedData})
@@ -77,4 +74,4 @@ const getUsersData= async function (req, res) {
 
 module.exports.createUser= createUser
 module.exports.getUsersData= getUsersData
-module.exports.basicCode= basicCode
+module.exports.basicCode= basicCode*/
