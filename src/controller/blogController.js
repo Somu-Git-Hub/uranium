@@ -102,7 +102,7 @@ const getBlogs = async function(req,res){
             return res.status(400).send({msg: "Please enter the subcat in right format...!"});
         }
 
-        let filterData = await blogModel.find({ isPublished : true , isDeleted : false , $or : [ {authorId : id} , {category : category}, {subcategory : {$in : [subcat]}}, {tags : {$in : [tag]}}]}).count();
+        let filterData = await blogModel.find({ isPublished : true , isDeleted : false , $or : [ {authorId : id} , {category : category}, {subcategory : {$in : [subcat]}}, {tags : {$in : [tag]}}]});
 
         if(filterData.length == 0){
             return res.status(404).send({status : false , msg : "Documents not found.."});
@@ -137,7 +137,7 @@ const updateblog = async function (req, res) {
             return res.status(400).send({msg : "Title must be sent,as it needs to be updated.!"});
         }
         if(!bod){
-            return res.status(400).send({msg : "Body must be sent,as it needs tp be updated.!"});
+            return res.status(400).send({msg : "Body must be sent,as it needs to be updated.!"});
         }
         if(!tag1){
             return res.status(400).send({msg : "Tag must be sent,as it needs to be added..!"});
@@ -195,7 +195,7 @@ const deleteblog = async function (req, res) {
             return res.status(404).send("No such blog exists");
         }
 
-        if(blog.isDeleted){
+        if(blog.isDeleted == true){
             return res.status(400).header({ status: false, msg: "Blog not found, may be deleted" })
         }
 
@@ -228,13 +228,13 @@ const deleteblog2 = async function (req, res) {
         let tags = req.query.tags
         let subcategory = req.query.subcategory
 
-        let fetchdata = await blogModel.find({$or:[{category: category  },{tags: tags},{subcategory: subcategory}, { authorId: authorId }]})
+        let fetchdata = await blogModel.find({$or:[{category: category},{tags: tags},{subcategory: subcategory}, { authorId: authorId }]})
 
         if(fetchdata.length == 0){
-            res.status(404).send({ status: false, msg: " Blog document doesn't exist "})
+            res.status(404).send({ status: false, msg: " Blog document doesn't exist "});
         }
 
-        let deletedtedUser = await blogModel.updateMany({$or:[{category: category  },{tags: tags},{subcategory: subcategory},{isPublished: true}, { authorId: authorId }]}, { $set: { isDeleted: true } }, { new: true });
+        let deletedtedUser = await blogModel.updateMany({$or:[{category: category},{tags: tags},{subcategory: subcategory},{isPublished: true}, { authorId: authorId }]}, { $set: { isDeleted: true } }, { new: true });
 
         res.status(200).send({ msg: "done", data: deletedtedUser });
     }

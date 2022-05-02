@@ -1,6 +1,6 @@
 const authorModel = require("../models/authorModel");
 const jwt = require("jsonwebtoken");
-const res = require("express/lib/response");
+//const res = require("express/lib/response");
 
 const typeChecking = function(data){
     if(typeof data !== 'string'){
